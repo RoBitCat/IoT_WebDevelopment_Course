@@ -1,60 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>HTML form</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Image Gallery</title>
     </head>
     <body>
-        <h2>HTML form</h2>
-        <form>
-            <fieldset>
-                <legend>Contact information:</legend>
-            <table>    
-                <tr>
-                <td><label for="fname">First name:</label></td>
-                <td><input type="text" id="fname" name="fname" placeholder="First name"></td>
-                <td><label for="PCM">Preferred contact method:</label></td>
-                </tr>
+        <!-- TODO: Make list of contents with links to different sections -->
 
-                <tr>
-                <td><label for="lname">Last name:</label></td>
-                <td><input type="text" id="lname" name="lname" placeholder="Last name"></td>
-                <td><input type="radio" id="PCM" name="PCM">Email</td>
-                </tr>
+        <header>
+            <h1>Responesive website. How does Flexbox work?</h1>
+            <p>
+                In this page I am going to explain to the best of my ability how this website utilize flexbox (and grid if I have time) to create a 
+                responesive website design
+            </p>
+            <p>
+                Structure will be as following: 
+                <br> 
+                Examples (text and images) -> observation and explaination
+            </p>
+            <h2>Why Flex?</h2>
+            <p>
+                Flex is a useful feature that allows seemless intregration between different users across multiple devices. Be it mobile, desktop or tablet. <br>
+                It makes a responesive website. Meaning that it respones the content to the size of the browser without a need of different template.
+            </p>
 
-                <tr>
-                <td><lable for="email">Email:</lable></td>
-                <td><input type="text" id="email" name="email" placeholder="Example@email.com"></td>
-                <td><input type="radio" id="PCM" name="PCM">Telephone</td>
-                </tr>
+        </header>
+        
+        <!-- Main box for flex examples -->
+        <div class="box" style="background-color: aquamarine; padding: 0.1rem">
 
-                <tr>
-                <td><label for="tel">Telephone:</label></td>
-                <td><input type="text" id="tel" name="tel" placeholder="+358 44 1234567"></td>
-                </tr>
-            </table>
-            </fieldset>
+            <!-- 1st box for text examples -->
+            <div class="box">
+                <h3><b>Flex Example 1.1: </b>List of text using flex display</h3>
+                <ul class="flex">
+                    <li>List 01</li>
+                    <li>List 02</li>
+                    <li>List 03</li>
+                    <li>List 04</li>
+                    <li>List 05</li>
+                    <li>List 06</li>
+                    <li>List 07</li>
+                    <li>List 08</li>
+                    <li>List 09</li>
+                    <li>List 10</li>
+                </ul>
+                <p>
+                    Here we have list of 10 text using the flex attributes. Which reacts to the change in website width.
+                    <br><br>
+                    This attribute is affected by 2 main elements in class defined as <code>.flex</code> in CSS:
 
-            <fieldset>
-                <legend>Feedback:</legend>
-            <table>
-                <tr>
-                <td><label for="MsgSubj">Message subject:</label>
-                <input type="text" id="MsgSubj" name="MsgSubj" placeholder="Message subject"></td>
-                </tr>
+                    <ul>
+                    <li><b>display: flex;</b> -> Enable the flex function.</li>
+                    <li><b>flex-wrap: wrap;</b> -> Changes the flex-wrap style to wrap. Meaning anything that is overflowing (going off screen) will get pushed into a new line</li>
+                    </ul>
 
-                <tr>
-                <td><textarea name="message" rows="15" cols="50"></textarea></td>
-                </tr>
+                    You may try this by resizing the browser window width to see how it affects the flex element
+                </p>
+                <br>
 
-                <tr>
-                    <td><label for="file">Attach a file:</label>
-                    <input type="file" id="file" name="file"></td>
-                </tr>
-            </table>
-            <hr>
-            <input type="submit" value="Send">
-            </fieldset>
+                <!-- Flexbox container -->
+                <h3><b>Example 1.2</b> Flexbox and flex items</h3>
+                <div class="container">
+                    <div>Text 1 short</div>
+                    <div>This text is a longer text 2</div>
+                    <div>3rd text is a text that is longer then the text 2</div>
+                    <div>Text 4 is normal</div>
+                    <div>Text 5 is longer than text 4</div>
+                    <div>Text 6 you get the idea</div>
+                    <div>Text</div>
+                </div>
+                <p>
+                    This Flexbox is a <code>&lt;div&gt;</code> with class defined as <code>.container</code> giving as <code>&lt;div class="container"&gt;</code>.<br>
+                    This <code>.container</code> class has a similar element to the text from example 1.1. but builds up on it.<br>
+                    A new line <code>.container > div</code> is added in <b>CSS</b> file. The <code>></code> symbol is called the child combinator. It makes sure that any <code>&lt;div&gt;</code> element nested inside of <code>&lt;div class="container"&gt;</code> is selected at any depth.<br>
+                    <br>
+                    In the <b>CSS</b> file the .container file has the following <code>.container > div {background-color: rgb(0, 46, 61); padding: 1rem; margin: 0.5; flex-grow: 1; text-align: center;}</code><br>
+                    <ul>
+                        <li><b>Padding:</b> seen as the empty area around the text</li>
+                        <li><b>Margin:</b> the white area around the flex items with the texts</li>
+                        <li><b>Flex-grow</b> set to 1 to allow the flex items to "grow" to the max avaliable space</li>
+                        <li><b>Text-align</b> Set to center to center the text</li>
+                    </ul>
+                </p>
 
-        </form>
+
+            </div>
+
+            <!-- 2nd box for image examples -->
+            <div class="box">
+                <!-- Flex display examples -->
+                <h3><b>Flex Example 2: </b>Here is a list of images using flex display</h3>
+                <div class="flex">
+                    <img src="https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=640&crop=smart&auto=webp&s=2487b53aa5d4ac4e710f7717a6850c83562272ab" 
+                    alt="Image 1" >
+                    <img src="https://media.tenor.com/3zMKwFLoRcQAAAAe/rigby-cat-stare.png" 
+                    alt="Image 2" >
+                    <img src="https://i.pinimg.com/736x/e3/28/8f/e3288f72ccd9bc0ddac441a2f12f59db.jpg" 
+                    alt="Image 3" >
+                    <img src="https://media.tenor.com/ZlZZTd366EYAAAAe/we-have-no-sappers-dog-accepting-fate.png" 
+                    alt="Image 4" >
+                </div>
+                <p>
+                    You may resize the window as see fit. <br>
+                    it shares the same class as <b>example 1.1</b>
+                </p>
+            </div>
+        </div>
+
     </body>
 </html>
