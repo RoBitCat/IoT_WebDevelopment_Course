@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+    <title>String handling</title>
+</head>
+<body>
+    <h2>Task 1:</h2>
+    <p>Make a program that asks the user for a word or phrase. As a result, the program tells you how many L letters the input contained.</p>
+        <b>Input: </b>
+        <input id="input1" type="text" placeholder="Input word or pharse here" oninput="task1()">
+        <p id="output1"><b>Output will appear here</b></p>
+
+        <script>
+            function task1() {
+                const myString = document.getElementById('input1').value;
+                const amountL = myString.toLowerCase().split('l').length - 1;
+                document.getElementById('output1').innerHTML = "<b>Output:</b> " + myString + " contains " + amountL + "xL characters";                
+            }
+        </script>
+
+    <br>
+    <h2>Task 2:</h2>
+    <p>Make a program that asks the user for a word or phrase. As a result, the program tells you how many vowels the input contained.</p>
+        <b>Input: </b>
+        <input id="input2" type="text" placeholder="Input word or pharse here" oninput="task2()">
+        <p id="output2"><b>Output will appear here</b></p>
+
+        <script>
+            function task2() {
+                const myString = document.getElementById('input2').value;
+                const a = myString.toLowerCase().split('a').length - 1;
+                const e = myString.toLowerCase().split('e').length - 1;
+                const i = myString.toLowerCase().split('i').length - 1;
+                const o = myString.toLowerCase().split('o').length - 1;
+                const u = myString.toLowerCase().split('u').length - 1;
+                const y = myString.toLowerCase().split('y').length - 1;
+                const å = myString.toLowerCase().split('å').length - 1;
+                const ä = myString.toLowerCase().split('ä').length - 1;
+                const ö = myString.toLowerCase().split('ö').length - 1;
+                const vawels = a + e + i + o + u + y + å + ä + ö
+                // for (let i = 0; i < list ; i++) {
+                //     if list 
+                // }
+
+                document.getElementById('output2').innerHTML = "<b>Output:</b> " + myString + " contains " + vawels + " vowels";                
+            }
+        </script>
+
+    <br>
+    <h2>Task 3:</h2>
+    <p>Make a program that asks the user for a word or phrase. As a result, the program tells you how is input palindrome or not.</p>
+        <b>Input: </b>
+        <input id="input3" type="text" placeholder="Input word or pharse here" oninput="task3()">
+        <p id="output3"><b>Output will appear here</b></p>
+
+        <script>
+            function task3() {
+                const myString = document.getElementById('input3').value;
+                const mySLower = myString.toLowerCase();
+                const mySReversed = mySLower.split('').reverse().join('')
+                if (mySLower === mySReversed) {
+                    checker = ""
+                } else {
+                    checker = "NOT"
+                }
+
+                if (myString === "") {
+                    document.getElementById('output3').innerHTML = "<b>Output:</b>";                
+                } else {
+                    document.getElementById('output3').innerHTML = "<b>Output:</b>" + myString + " is " + checker + " palindrome.";                
+                }
+            }
+        </script>
+</body>
