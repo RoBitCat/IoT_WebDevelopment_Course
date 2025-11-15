@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> Google-map search</title>
+    </head>
+    <body>
+        <iframe id="mapFrame" 
+        src="https://www.google.com/maps?q=Yliopistonkatu36Lappeenranta&output=embed"
+        width="50%" height="300px" frameBorder="0">
+        </iframe>
+        <h3>Seach for a place</h3>
+        Street address:
+        <input type="text" id="streetAddress" placeholder="Type Street Name">
+        City:
+        <input type="text" id="city" placeholder="Type City">
+        <button onclick="mapSearch()">Search</button>
+
+        <script>
+            function mapSearch() {
+                const address = document.getElementById('streetAddress').value;
+                const city = document.getElementById('city').value;
+                
+                document.getElementById('mapFrame').src = "https://www.google.com/maps?q=" + address + city + "&output=embed"
+            }
+        </script>
+        
+    </body>
+</html>
