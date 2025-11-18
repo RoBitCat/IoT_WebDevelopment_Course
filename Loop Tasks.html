@@ -5,5 +5,92 @@
     </head>
     <body>
         <h2>1. Make a program that prints the value of the factorial N!, that is N*(N-1)'(N-2)*...*1</h2>
+        <b>Input N: </b>
+        <input id="input1" type="number" placeholder="Input number here" oninput="task1('input1')">
+        <p id="output1"><b>Output will appear here</b></p>
+
+        <br>
+        <h2>2. Make a program that adds the digits a given number N together.</h2>
+        <b>Input N: </b>
+        <input id="input2" type="number" placeholder="Input number here" oninput="task2('input2')">
+        <t id="output2i"></t>
+        <p id="output2"><b>Output will appear here</b></p>
+
+        <br>
+        <h2>3. Make a program that calculates the sums of the 1) odd and 2) even numbers of a given number N.</h2>
+        <b>Input N: </b>
+        <input id="input3" type="number" placeholder="Input number here" oninput="task3('input3')">
+
+        <p id="output3"><b>Output will appear here</b></p>
+
+        <script>
+            function task1(input){
+                counter = parseInt(document.getElementById(input).value);
+                let x = 1;
+                if (counter < 0) {
+                    x = 'Unspecified'
+                } else {
+                    for (let i = 1; i <= counter; i ++) {
+                        x *= i;
+                    }
+                }
+                
+                document.getElementById('output1').innerHTML = "<b>Output:</b> " + x;
+            }
+
+            function task2(input){
+                counter = parseInt(document.getElementById(input).value);
+                let x = 0;
+                let t = "";
+                if (counter < 0) {
+                    x = 'Unspecified'
+                } else {
+                    for (let i = 1; i <= counter; i ++) {
+                        x += i;
+                        if (counter > i) {
+                            t += i + " + ";
+                        } else {
+                            t += i;
+                        }
+                    }
+                }
+                
+                document.getElementById('output2i').innerHTML = `(N = ${counter}: ${t} = ${x})`;
+                document.getElementById('output2').innerHTML = "<b>Output:</b> " + x;
+            }
+
+            function task3(input){
+                counter = parseInt(document.getElementById(input).value);
+                const N = counter;
+                let xEven = 0;
+                let xOdd = 0;
+                let tEven = "";
+                let tOdd = "";
+                if (counter < 0) {
+                    x = 'Unspecified'
+                } else {
+                    for (let i = 1; i <= counter; i ++) {
+                        if (i % 2 == 1) {
+                            xOdd += i;
+                            if (counter > i) {
+                                tOdd += i + " + ";
+                            } else {
+                                tOdd += i;
+                            }
+                        } else {
+                            xEven += i;
+                            if (counter > i) {
+                                tEven += i + " + ";
+                            } else {
+                                tEven += i;
+                            }
+                        }
+                    }
+                }
+                
+                document.getElementById('output3').innerHTML = `<b>Output:</b> Sum of Odd = ${xOdd}, Sum of Even = ${xEven} <br>
+                N = ${N}: ${tOdd} = ${xOdd} and ${tEven} = ${xEven}`;
+            }
+        </script>
     </body>
 </html>
