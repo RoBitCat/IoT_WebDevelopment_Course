@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The personal identity code</title>
+    </head>
+    <body>
+        <h1>1. Implement a function that checks the correctness of the personal identity number.</h1>
+        <p>Input data bellow</p>
+        <input id="id1" type="text" placeholder="Insert PIC" oninput="idCheck('id1')">
+        <p id="idOut1">Output:</p>
+
+        <script>
+            function idCheck(inputId){
+                const out = document.getElementById('idOut1');
+                const value = document.getElementById(inputId).value.trim(); // Trim removes whitespace
+
+                const dd = value.substring(0, 2);
+                const mm = value.substring(2, 4);
+                const yy = value.substring(4, 6);
+                const sep = value.charAt(6);
+                const id = value.substring(7, 10);
+                const ctrlChar = value.substring(10);
+
+                const day = parseInt(dd, 10);
+                const month = parseInt(mm, 10);
+                const year = parseInt(yy, 10);
+                let fullYear;
+                let sex;
+
+                
+
+                // Full year
+                if (sep === '+') {
+                    fullYear = 1800 + year
+                } else if (sep === '-' || sep === 'Y') {
+                    fullYear = 1900 + year
+                } else if (sep === 'A') {
+                    fullYear = 2000 + year
+                }
+                
+                // Checks 
+                if (!value) { 
+                    out.textContent = 'Output:'; 
+                    return; 
+                }
+
+                if (value.length > 11) { 
+                    out.textContent = 'Is valid: false, expected 11 characters'; 
+                    return; 
+                }
+
+                if (value.length < 11) { 
+                    out.textContent = 'Is valid: false, expected 11 characters'; 
+                    return; 
+                }
+
+                // If value isn't int
+                if (isNaN(day) || isNaN(month) || isNaN(year)) {
+                    out.textContent = 'Is valid: false, day, month or year is not numeric';
+                    return;
+                }
+
+                // individual number checker
+                if (isNaN(id) || id.length !== 3 || id.includes('+') || id.includes('-')) {
+                    out.textContent = 'Is valid: false, individual number must be 3 numeric characters';
+                    return;
+                }
+
+                // Checks month
+                if (month < 1 || month > 12) {
+                    out.textContent = 'Is valid: false, invalid month';
+                    return;
+                }
+
+                // Validate day by month
+                if (['01','03','05','07','08','10','12'].includes(mm)) {
+                    if (day < 1 || day > 31) { out.textContent = 'Is valid: false, invalid day'; return; }
+                } else if (['04','06','09','11'].includes(mm)) {
+                    if (day < 1 || day > 30) { out.textContent = 'Is valid: false, invalid day'; return; }
+                } else { // February
+                    if ((fullYear % 4 === 0) && (fullYear % 100 !== 0) || fullYear % 400 === 0) {
+                        if (day < 1 || day > 29) { out.textContent = 'Is valid: false, invalid day for February'; return; }
+                    } else {
+                        if (day < 1 || day > 28) { out.textContent = 'Is valid: false, invalid day for February'; return; }
+                    }
+                }
+
+                
+
+                // Check for sex
+                if (id%2 === 1) {
+                    sex = 'Male'
+                } else {
+                    sex = 'Female'
+                }
+
+
+                
+                // Age calculations
+                const now = new Date();
+                const curYear = now.getFullYear();
+                const curMonth = now.getMonth() + 1; // getMonth() is 0-indexed
+                const curDay = now.getDate();
+                let ageYY = curYear - fullYear;
+                let ageMM = curMonth - month;
+                let ageDD = curDay - day;
+
+                // if all passes
+                out.innerHTML = 
+                `
+                Is valid: true <br>
+                Sex: ${sex} <br>
+                Age: ${ageYY} <br> (${ageYY} years ${ageMM} months ${ageDD} days) Calculated at ${curYear}.${curMonth}.${curDay}
+                `;
+                
+            }
+        </script>
+
+        <br>
+        <h1>2. Make a function that creates an ID. The initial part of the parameter that is passed to the function.</h1>
+        <!-- <input id="id2" type="text" placeholder="Insert PIC" oninput="idCheck2('id2')"> -->
+        
+        <div>
+        Input date of birth
+        <input id="id2" type="text" placeholder="DDMMYYYY"> <br>
+        sex:
+        <select name="sex2" id="sex2">
+            <option value="male">male</option>
+            <option value="female">female</option>
+        </select>
+        <br>
+        <button onclick="idCheck2()">generate</button>
+
+        <p id="idOut2">Output:</p>
+        </div>
+
+
+        <script>
+            function idCheck2(inputId){
+                const out = document.getElementById('idOut2');
+                const value = document.getElementById('id2').value.trim(); // Trim removes whitespace
+
+                const dd = value.substring(0, 2);
+                const mm = value.substring(2, 4);
+                const YY = value.substring(4, 6); // first 2 value of the year
+                const yy = value.substring(6, 8); // last 2 value of the year
+                // const sep = value.charAt(6);
+                let sep;
+                // const id = value.substring(7, 10);
+                let idn;
+                
+                // generate a 3-digit individual number between 002 and 899
+                const sel = document.getElementById('sex2');
+                const min = 2, max = 899;
+                let rand = Math.floor(Math.random() * (max - min + 1)) + min;
+
+                // enforce parity: odd for male, even for female
+                if (sel && sel.value === 'male') {
+                    if (rand % 2 === 0) rand = (rand === max ? rand - 1 : rand + 1);
+                } else { // female (even)
+                    if (rand % 2 === 1) rand = (rand === max ? rand - 1 : rand + 1);
+                }
+
+                idn = String(rand).padStart(3, '0');
+                const sex = document.getElementById('sex2').value
+
+                const day = parseInt(dd, 10);
+                const month = parseInt(mm, 10);
+                const year = parseInt(yy, 10);
+
+                // Checks 
+                if (!value) { 
+                    out.textContent = 'Output:'; 
+                    return; 
+                }
+
+                if (value.length < 8) { 
+                    out.textContent = 'Is valid: false, incomplete date'; 
+                    return; 
+                }
+
+                // If value isn't int
+                if (isNaN(day) || isNaN(month) || isNaN(year)) {
+                    out.textContent = 'Is valid: false, day, month or year is not numeric';
+                    return;
+                }
+
+                // Checks month
+                if (month < 1 || month > 12) {
+                    out.textContent = 'Is valid: false, invalid month';
+                    return;
+                }
+
+                // Validate day by month
+                if (['01','03','05','07','08','10','12'].includes(mm)) {
+                    if (day < 1 || day > 31) { out.textContent = 'Is valid: false, invalid day'; return; }
+                } else if (['04','06','09','11'].includes(mm)) {
+                    if (day < 1 || day > 30) { out.textContent = 'Is valid: false, invalid day'; return; }
+                } else { // February
+                    if (day < 1 || day > 29) { out.textContent = 'Is valid: false, invalid day for February'; return; }
+                }
+
+                // assign separator
+                if (YY === "18") {
+                    sep = '+'
+                } else if (YY === '19') {
+                    sep = '-'
+                } else if (YY === '20') {
+                    sep = 'A'
+                } else {
+                    out.textContent = 'Is valid: false, invalid year. Must lesser than 1800s or greater than 2000s.'
+                    return;
+                }
+
+                // control character calculator
+                const idCode = parseInt(dd + mm + yy + idn);
+                const remainder = idCode % 31;
+                const listCtrlChar = [
+                    "0","1","2","3","4","5","6","7","8","9",
+                    "A","B","C","D","E","F","H","J","K","L",
+                    "M","N","P","R","S","T","U","V","W","X","Y"
+                ]
+                const ctrlChar = listCtrlChar[remainder]
+
+                if (typeof ctrlChar === 'undefined') {
+                    out.textContent = 'Computed remainder out of range';
+                    return;
+                }    
+
+                out.innerHTML = `Output: ${dd + mm + yy + sep + idn + ctrlChar}`
+            }
+        </script>
+
+    </body>
+</html>
+
+
+
+
+<!-- 1. Implement a function that checks the correctness of the personal identity number.
+
+see definition https://dvv.fi/en/personal-identity-code
+
+0123456789ABCDEFHJKLMNPRSTUVWXY
+
+Pay attention to the inspection of the front part! ddmmyy i.e. create your own function to check it.
+
+For example
+
+    input: 131052-308T
+    is valid: true
+    sex: Female
+    age: 69 (option for more specific age)
+    (68 years 7 months 13 days) this is calculated 26.05.2021
+
+    input: 331052-308T
+    is valid: false, day is wrong
+
+    input 310252-308T
+    is valid: false, day or month is incorrect
+
+ 
+2. Make a function that creates an ID. The initial part of the parameter that is passed to the function.
+
+see definition https://dvv.fi/en/personal-identity-code
+
+Note here also ddmmyy check.
+
+For example
+
+    input: 131052-308
+    output: T
+
+
+Return a link to the submission. 
+Make screen capture video how your solution works.
+
+NOTICE:
+==> Provide links to working code that open with one click!
+
+VERIFY THE FORMAT and CORRECTNESS OF THE INPUT.
+Instruct how to give input data.'
+               DD/MM/YYYY
+               Ask the gender/sex: F/;M
+Select   +/-/A depending on the century the person was born
+Odd/even number ==>  gender/sex
+Select the numbers  after +/-/A  from the appropriate range (2...899), figure out  the check number by simple division and using the table of codes- -->
